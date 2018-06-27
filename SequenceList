@@ -1,0 +1,143 @@
+//顺序表
+//定义一个静态分配的线性表
+#define MaxSize 50
+typedef struct 
+{
+	Elemtype data[MaxSize];//顺序表中的元素
+	int length//线性表的长度
+}Sqlist;//顺序表的类型定义
+//定义一个动态分配的顺序表
+#define InitSize 100//表长度的初始定义
+typedef struct 
+{
+	Elemtype *data;//指向动态分配数组的指针
+	int MaxSize,length; //数组的最大容量和当前长度
+}Seqlist;
+int main()
+{
+Seqlist L;
+L.data=(Elemtype*)malloc(sizeof(Elemtype)*InitSize)//分配内存，每次分配100
+}
+//插入元素
+bool listinsert(Sqlist &L,int index,Elemtype item)//静态分配的线性表，定义的api是限制调用端的使用
+{
+if (index<0||index>L.length) return false;//判断i的位置是否有效从0到最后一个为有效
+if (L.length>MaxSize) return false;//线性表已经满了
+for(int i=L.length;i>index;i++)
+	{
+	L.data[i]=L.data[i-1];//所有元素往后移动一个单位，从后边往前走
+	}
+L.data[index]=item;//一定要是同一数据类型才能赋值,将数据插入
+L.length++;//线性表的长度+1
+return true;
+}
+//删除操作
+bool delitem(Sqlist &L,int index)//删除对应下标的元素，书上是第i个
+{
+if (index<0||index>L.length-1)
+for(int i=index+1;i<length;i++)
+	{
+	L.data[i-1]=L.data[i];//将后边的元素依次往前移动，覆盖值	
+	}
+	L.length--;//后边的元素直接忽略，就当做有一个很大的默认值
+}
+//删除顺序表中最小的元素,并将其删除，空格由最后一个元素填充
+Elemtype min(Sqlist &L)
+{
+if (L.length<=0)
+	printf("error\n");//如果列表的长度小于1，则报错
+	//这里添加一个return就可以不要下边的else，但是不知返回什么
+else
+	{
+	Elemtype min;
+	int index=0;//会被替换的索引
+	min=L.data[0];
+	for(int i;i<L.length;i++)
+		{
+		if (L.data[i]<min):
+			min=L.data[i];
+			index=i;
+		}
+	L.data[index]=L.data[L.length-1];
+	L.length--;
+	return min
+	}
+}
+//将顺序表中的规定元素逆序
+void reverse(Sqlist &L,int x,int y)
+{
+Elemtype temp;//定义一个临时变量
+for(int i=x-1;i<(y-1)/2;i++)
+	{
+	temp=L.data[i];
+	L.data[i]=L.data[L.length-i-1];
+	L.data[L.length-i-1]=temp;
+	}
+}
+//删除顺序表中的值为X的元素
+void delx(Sqlist &L,Elemtype X)
+{
+int x_count=0;//统计值bu为X的个数
+for(int i=0;i<L.length;i++)
+	{
+		if (L.data[i]!=X)
+		{
+			L.data[x_count]=L.data[i];
+			x_count++;
+		}
+	}
+L.length=x_count+1;
+}
+//从顺序表中删除S到T中的所有值
+bool delst(Sqlist &L,int s,int t)
+{
+if(s>t||s<0):
+	return false;
+for(int i=1;i<L.length;i++)
+{
+	L.data[s+i-1]=L.data[t+i];//把后边的元素往前边移动
+}
+L.length-=(t-s+1);
+return true;
+}
+//从顺序表中删除所有重复元素
+bool delecho(Sqlist &L)
+{
+int length=0;
+bool lock=true;
+for(int i=0;i<L.length-1;i++)
+	{
+	for(int j=0;j<length;j++)
+		if(L.data[i]==L.data[j]) lock=false;//元素已经重复
+	if (lock)
+		{
+		L.data[length]=L.data[i]//如果元素不重复，就赋值
+		length++;
+		}
+	lock=true;
+	}
+L.length=length;
+}
+//将两个顺序表组成一个顺序表
+Sqlist consist(Sqlist &L1,Sqlist &L2)
+{
+Sqlist L;
+int index=0;
+for(int i=0,j=0;i<L1.length||j<L2.length;i++,j++)
+	{
+	if(L1.data[i]<L2.data[j]) 
+		L.data[index]=L1.data[i]
+	else
+		L.data[index]=L2.data[j]
+	}
+L.length=L1.length+L2.length
+return L
+}
+
+//将由两个长度为m，n顺序表组成的m+n顺序表换位置
+void convert(Sqlist &L)
+{
+reverse(*L,0,m-1);//这个函数在前边67行
+reverse(*L,m,m+n-1);
+reverse(*L,0,m+n-1);
+}
